@@ -1,0 +1,111 @@
+<canvas class = "webgl"></canvas>
+ <script>
+  console.log("working");
+    require(['jquery','threejs','gltfloader','OrbitControls','canvastoBlob','FileSaver','Croppr'],
+    function($,THREE,GLTFLoader,OrbitControls,canvastoblob,FileSaver,Croppr){
+        const canvas = document.querySelector('.webgl')
+const scene =new THREE.Scene()
+scene.background = new THREE.Color(0xbdd9c4);
+
+// var textureLoader = new THREE.TextureLoader();8a70ff-bg color
+// var texture = textureLoader.load( 'pack.jpg');
+// texture.flipY = false;
+
+var loader = new THREE.TextureLoader();
+"<?php echo $this->getViewFileUrl('Ajith_Test::outer.jpeg'); ?>"
+
+var texture = loader.load( "<?php echo $this->getViewFileUrl('Ajith_Test::outer.jpeg'); ?>", function ( texture ) {
+    texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+    texture.flipY = false;
+});
+    var texture2 = loader.load( "<?php echo $this->getViewFileUrl('Ajith_Test::pack.jpg'); ?>", function ( texture ) {
+        texture2.wrapS = texture2.wrapT = THREE.RepeatWrapping;
+        texture2.flipY = false;
+    });
+        var texture3 = loader.load( "<?php echo $this->getViewFileUrl('Ajith_Test::back.jpeg'); ?>", function ( texture ) {
+            texture3.wrapS = texture3.wrapT = THREE.RepeatWrapping;
+            texture3.flipY = false;
+} );
+
+// var texture1 = loader.load( 'images.jpeg', function ( texture1 ) {
+//     texture1.wrapS = texture1.wrapT = THREE.RepeatWrapping;
+//     texture1.flipY = false
+// } );
+
+var loader = new THREE.GLTFLoader();
+loader.load( "<?php echo $this->getViewFileUrl('Ajith_Test::10141149.glb'); ?>", ( gltf ) => {
+  var model = gltf.scene;
+  model.traverse ( ( o ) => {
+    if ( o.isMesh ) {
+        console.log(o);
+        if(o.name==="RedCup_1")
+        {
+            o.material.map = texture;
+            
+
+            // o.material.map = texture1;
+        }
+        if(o.name==="RedCup_2")
+        {
+            o.material.map = texture2;
+            
+
+            // o.material.map = texture1;
+        }
+        if(o.name==="RedCup_3")
+        {
+            o.material.map = texture3;
+            
+
+            // o.material.map = texture1;
+        }
+    //   o.material.map = o.name==="RedCup_2"?texture:null;
+    // o.material.map = texture;
+           model.scale.set(.2, .2, .2)
+    }
+  } );
+  scene.add( model );
+} );
+
+const light = new THREE.DirectionalLight(0xffffff, 1)
+light.position.set(5,5,5)
+scene.add(light)
+const light2 = new THREE.AmbientLight(0xffffff, 1)
+light2.position.set(0,0,0)
+scene.add(light2)
+// const light3 = new THREE.PointLight(0xffffff,10);
+// light3.position.set(0,0,0);
+// scene.add(light3);
+
+const sizes = {
+    width: window.innerWidth,
+    height: window.innerHeight
+}
+
+const camera = new THREE.PerspectiveCamera(75, sizes.width/sizes.height,0.1, 100)
+camera.position.set(0,1,2)
+scene.add(camera)
+const renderer =new THREE.WebGL1Renderer({
+    canvas: canvas
+})
+
+renderer.setSize(sizes.width,sizes.height)
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+renderer.shadowMap.enabled = true
+renderer.gammaOutput = true
+renderer.render(scene, camera)
+controls = new THREE.OrbitControls( camera, renderer.domElement );
+		controls.autoRotate = true;
+function animate()
+{
+    requestAnimationFrame(animate)
+    renderer.render(scene,camera)
+}
+
+animate()
+// }
+
+    });
+    
+  
+    </script>

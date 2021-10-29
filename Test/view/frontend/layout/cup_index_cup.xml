@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+   <head>
+ <!-- <script src="Ajith_Test::js/custom.js"/> -->
+ <css src="Ajith_Test::css/croppr.min.css"/>
+  <css src="Ajith_Test::css/style.css"/>
+ <!-- <css src="Ajith_Test::css/animate.min.css"/> -->
+<!-- <script src="https://unpkg.com/three@0.126.0/examples/js/loaders/GLTFLoader.js"></script> -->
+
+   </head>
+    <referenceContainer name="content">
+         <block class="Ajith\Test\Block\Index" name="cup_index_cup" template="Ajith_Test::cup.phtml" />
+    </referenceContainer>
+
+</page>
